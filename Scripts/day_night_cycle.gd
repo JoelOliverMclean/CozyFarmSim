@@ -8,7 +8,7 @@ extends Node3D
 var time_of_day: float = 6.0:
 	set(value):
 		time_of_day = value
-		if Engine.is_editor_hint():
+		if should_run():
 			if sun_light:
 				update_sun()
 				sun_light.notify_property_list_changed()
@@ -31,13 +31,16 @@ var rotation_axis := Vector3(1, 0, 0)  # Rotate around x-axis (like real sun)
 var angle_offset = 45
 
 
+func should_run() -> bool:
+	return play_in_editor or not Engine.is_editor_hint()
+
+
 func _ready() -> void:
-	play_in_editor = true
 	day_seconds = day_length_minutes * 60.0
 
 
 func _process(delta):
-	if play_in_editor:
+	if should_run():
 		var minutes_per_second = 24.0 / (day_length_minutes * 60.0)
 		time_of_day += minutes_per_second * delta
 		if time_of_day >= 24.0:
