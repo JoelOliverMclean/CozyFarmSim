@@ -11,6 +11,8 @@ config_version=5
 [application]
 
 config/name="Cozy Farm Sim"
+run/main_scene="uid://cd7a56mf6kwjx"
+run/disable_stdout=true
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
