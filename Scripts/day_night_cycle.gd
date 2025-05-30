@@ -3,6 +3,8 @@ class_name DayNightCycle
 extends Node3D
 
 @export var play_in_editor: bool = false
+@export_range(-360, 360, 1)
+var y_offset_angle: int = 15
 
 @export_range(0.0, 24.0, 0.01)
 var time_of_day: float = 6.0:
@@ -70,7 +72,7 @@ func update_sun():
 	sun_light.light_energy = light_energy
 	
 	var sun_angle = get_sun_angle(time_of_day)
-	sun_light.rotation_degrees = Vector3(sun_angle - 180.0, 0, 0) # offset: 90° = noon straight overhead
+	sun_light.rotation_degrees = Vector3(sun_angle - 180.0, y_offset_angle, 0) # offset: 90° = noon straight overhead
 
 
 func get_sun_angle(time_of_day: float) -> float:
