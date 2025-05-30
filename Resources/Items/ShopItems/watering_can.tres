@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ShopItem" load_steps=3 format=3 uid="uid://dy843b8gucir2"]
+
+[ext_resource type="Texture2D" uid="uid://dck5vrd3vihd1" path="res://Resources/Images/watering_can.png" id="1_0nsw2"]
+[ext_resource type="Script" uid="uid://cqrghkqm1vp20" path="res://Resources/Items/shop_item.gd" id="2_ir7jp"]
+
+[resource]
+script = ExtResource("2_ir7jp")
+item_name = "Watering Can"
+icon = ExtResource("1_0nsw2")
+cost = 5
+metadata/_custom_type_script = "uid://cqrghkqm1vp20"

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ShopItem" load_steps=3 format=3 uid="uid://x43ms6retui8"]
+
+[ext_resource type="Texture2D" uid="uid://lf655pkfxde1" path="res://Resources/Images/planter.png" id="1_3w7yj"]
+[ext_resource type="Script" uid="uid://cqrghkqm1vp20" path="res://Resources/Items/shop_item.gd" id="2_kv5nq"]
+
+[resource]
+script = ExtResource("2_kv5nq")
+item_name = "Planter"
+icon = ExtResource("1_3w7yj")
+cost = 20
+metadata/_custom_type_script = "uid://cqrghkqm1vp20"

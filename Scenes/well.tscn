@@ -1,0 +1,105 @@
+[gd_scene load_steps=13 format=3 uid="uid://bpk8uqv8m4mbb"]
+
+[ext_resource type="PackedScene" uid="uid://b8txaljt3tt8v" path="res://Resources/Models/lowpolywell.glb" id="1_fkaar"]
+[ext_resource type="Script" uid="uid://njxij726xwdp" path="res://Scripts/well.gd" id="1_swqaa"]
+[ext_resource type="Script" uid="uid://5s47jqwuhs5m" path="res://Scripts/interactable.gd" id="2_o0wdx"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_o0wdx"]
+height = 0.998047
+radius = 0.925781
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_swqaa"]
+size = Vector3(0.275391, 2.93631, 0.281494)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_w0l7h"]
+radius = 0.249308
+height = 3.18782
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hs7x2"]
+size = Vector3(2.96265, 1.70787, 0.231522)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fkaar"]
+albedo_color = Color(0, 0.8823, 0.823704, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_o0wdx"]
+material = SubResource("StandardMaterial3D_fkaar")
+top_radius = 0.55
+bottom_radius = 0.55
+height = 0.5
+radial_segments = 16
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o0wdx"]
+albedo_color = Color(0.339095, 0.339095, 0.339095, 1)
+
+[sub_resource type="TubeTrailMesh" id="TubeTrailMesh_swqaa"]
+material = SubResource("StandardMaterial3D_o0wdx")
+radius = 0.6
+radial_steps = 16
+section_length = 0.15
+cap_top = false
+cap_bottom = false
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_swqaa"]
+height = 1.60352
+radius = 1.01563
+
+[node name="Well" type="StaticBody3D"]
+script = ExtResource("1_swqaa")
+
+[node name="lowpolywell" parent="." instance=ExtResource("1_fkaar")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0377798, 0.523304, 0.00377794)
+shape = SubResource("CylinderShape3D_o0wdx")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.15133, 1.46678, 0)
+shape = SubResource("BoxShape3D_swqaa")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.11504, 1.46678, 0)
+shape = SubResource("BoxShape3D_swqaa")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, -0.0332591, 3.15871, 0)
+shape = SubResource("CapsuleShape3D_w0l7h")
+
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.687316, 0.726359, 0, -0.726359, 0.687316, 0, 2.55468, 0.723135)
+shape = SubResource("BoxShape3D_hs7x2")
+
+[node name="CollisionShape3D6" type="CollisionShape3D" parent="."]
+transform = Transform3D(-1, -6.35003e-08, 6.00871e-08, 1.24043e-09, 0.67694, 0.736038, -8.7414e-08, 0.736038, -0.67694, -1.2765e-10, 2.74303, -0.644703)
+shape = SubResource("BoxShape3D_hs7x2")
+
+[node name="Water" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0308659, 0.25, 0)
+cast_shadow = 0
+mesh = SubResource("CylinderMesh_o0wdx")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0308659, 0.25, 0)
+cast_shadow = 0
+mesh = SubResource("TubeTrailMesh_swqaa")
+
+[node name="InteractLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.54422, -0.00230663)
+visible = false
+billboard = 1
+no_depth_test = true
+text = "[E] Fill Watering Can"
+font_size = 20
+outline_size = 6
+
+[node name="LookAtDetect" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.585747, 5.96046e-08, -0.132174)
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("2_o0wdx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LookAtDetect"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.592596, 0.675364, 0.147503)
+shape = SubResource("CylinderShape3D_swqaa")
+
+[connection signal="focus_gained" from="LookAtDetect" to="." method="_on_look_at_detect_focus_gained"]
+[connection signal="focus_lost" from="LookAtDetect" to="." method="_on_look_at_detect_focus_lost"]

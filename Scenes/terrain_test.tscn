@@ -1,0 +1,62 @@
+[gd_scene load_steps=10 format=3 uid="uid://dbvg13h6rk7ns"]
+
+[ext_resource type="Script" uid="uid://dwwtuq2pwdkq7" path="res://addons/zylann.hterrain/hterrain.gd" id="1_f01qo"]
+[ext_resource type="Resource" uid="uid://ewof5jl5a4kg" path="res://Terrain/terrain_test/data.hterrain" id="2_i5dvc"]
+[ext_resource type="Script" uid="uid://ck536nwwx17bm" path="res://addons/zylann.hterrain/hterrain_texture_set.gd" id="3_jl2p6"]
+[ext_resource type="PackedScene" uid="uid://bq42h31e01uq1" path="res://Scenes/player.tscn" id="4_i5dvc"]
+[ext_resource type="PackedScene" uid="uid://cyaihqn2qgkhr" path="res://Scenes/shrub.tscn" id="5_jl2p6"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_i5dvc"]
+sky_top_color = Color(8.66354e-07, 0.478308, 0.70957, 1)
+sky_horizon_color = Color(0.725503, 0.83174, 0.87409, 1)
+ground_bottom_color = Color(0.402957, 0.349596, 0.287735, 1)
+ground_horizon_color = Color(0.725503, 0.83174, 0.87409, 1)
+
+[sub_resource type="Sky" id="Sky_jl2p6"]
+sky_material = SubResource("ProceduralSkyMaterial_i5dvc")
+
+[sub_resource type="Environment" id="Environment_n52oy"]
+background_mode = 2
+sky = SubResource("Sky_jl2p6")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="Resource" id="Resource_n52oy"]
+script = ExtResource("3_jl2p6")
+mode = 0
+textures = [[], []]
+
+[node name="Main" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_n52oy")
+
+[node name="HTerrain" type="Node3D" parent="."]
+script = ExtResource("1_f01qo")
+_terrain_data = ExtResource("2_i5dvc")
+chunk_size = 32
+collision_enabled = true
+collision_layer = 1
+collision_mask = 1
+physics_material = null
+shader_type = "LowPoly"
+custom_shader = null
+custom_globalmap_shader = null
+texture_set = SubResource("Resource_n52oy")
+render_layers = 1
+cast_shadow = 1
+shader_params/u_specular = 0.5
+metadata/_custom_type_script = "uid://dwwtuq2pwdkq7"
+
+[node name="Player" parent="." instance=ExtResource("4_i5dvc")]
+transform = Transform3D(-0.714363, 0, -0.699776, 0, 1, 0, 0.699776, 0, -0.714363, 3.08449, -2.38419e-07, 4.90703)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.995658, 0.043187, -0.0824583, -0.0381955, -0.618288, -0.785023, -0.0848857, 0.784764, -0.613954, 0, 1.6258, 3.08948)
+shadow_enabled = true
+
+[node name="Shrub" parent="." instance=ExtResource("5_jl2p6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.55704, 0.00312224, 3.79712)
+
+[node name="Shrub2" parent="." instance=ExtResource("5_jl2p6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.45691, 0.003122, 2.77951)

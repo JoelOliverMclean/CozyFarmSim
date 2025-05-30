@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://bdjn42kpqvok1"]
+
+[ext_resource type="Script" uid="uid://dwwtuq2pwdkq7" path="res://addons/zylann.hterrain/hterrain.gd" id="1_smvdh"]
+[ext_resource type="Resource" uid="uid://dlwvufds21d3u" path="res://Terrain/main/data.hterrain" id="2_ot7qb"]
+[ext_resource type="Resource" uid="uid://c2h1awn0scpdo" path="res://Resources/TerrainSets/main_terrain_set.tres" id="3_smvdh"]
+
+[node name="HTerrain" type="Node3D"]
+script = ExtResource("1_smvdh")
+map_scale = Vector3(0.1, 0.1, 0.1)
+centered = true
+_terrain_data = ExtResource("2_ot7qb")
+chunk_size = 32
+collision_enabled = true
+collision_layer = 1
+collision_mask = 1
+physics_material = null
+shader_type = "LowPoly"
+custom_shader = null
+custom_globalmap_shader = null
+texture_set = ExtResource("3_smvdh")
+render_layers = 1
+cast_shadow = 2
+shader_params/u_specular = 0.5
+metadata/_custom_type_script = "uid://dwwtuq2pwdkq7"

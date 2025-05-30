@@ -1,0 +1,74 @@
+[gd_scene load_steps=13 format=3 uid="uid://chucoa8eud0m4"]
+
+[ext_resource type="Script" uid="uid://b6r1phe0xrkm4" path="res://Scripts/stall.gd" id="1_cnl4a"]
+[ext_resource type="PackedScene" uid="uid://v6rwninb2cs7" path="res://Resources/Models/stall.glb" id="1_wxwty"]
+[ext_resource type="Script" uid="uid://cqrghkqm1vp20" path="res://Resources/Items/shop_item.gd" id="2_cw388"]
+[ext_resource type="Script" uid="uid://5s47jqwuhs5m" path="res://Scripts/interactable.gd" id="3_43idc"]
+[ext_resource type="Resource" uid="uid://p2o4beu4fc4" path="res://Resources/Items/ShopItems/seeds.tres" id="3_wshl7"]
+[ext_resource type="PackedScene" uid="uid://kwkop7rbbb2p" path="res://Scenes/UI/stall_ui.tscn" id="4_6mu0p"]
+[ext_resource type="Resource" uid="uid://dy843b8gucir2" path="res://Resources/Items/ShopItems/watering_can.tres" id="4_trnft"]
+[ext_resource type="Resource" uid="uid://x43ms6retui8" path="res://Resources/Items/ShopItems/planter.tres" id="5_0eafo"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wxwty"]
+size = Vector3(2.31055, 2.30821, 0.224487)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cnl4a"]
+size = Vector3(0.16272, 1.07007, 1.02588)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_43idc"]
+size = Vector3(2.3125, 0.12207, 0.664551)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6mu0p"]
+size = Vector3(2.04907, 1.57593, 0.56842)
+
+[node name="Stall" type="StaticBody3D"]
+script = ExtResource("1_cnl4a")
+inventory = Array[ExtResource("2_cw388")]([ExtResource("3_wshl7"), ExtResource("4_trnft"), ExtResource("5_0eafo")])
+
+[node name="Model" parent="." instance=ExtResource("1_wxwty")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.15359, -0.00704145)
+shape = SubResource("BoxShape3D_wxwty")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.01385, 0.53186, -0.632844)
+shape = SubResource("BoxShape3D_cnl4a")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.02513, 0.53186, -0.632844)
+shape = SubResource("BoxShape3D_cnl4a")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06851, -0.430067)
+shape = SubResource("BoxShape3D_43idc")
+
+[node name="Sign" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.95498, 0.113987)
+text = "Market Stall"
+outline_size = 6
+
+[node name="InteractLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.28884, -0.178178)
+visible = false
+billboard = 1
+no_depth_test = true
+text = "[E] Shop"
+font_size = 20
+outline_size = 6
+
+[node name="LookAtDetect" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.585747, 5.96046e-08, -0.132174)
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("3_43idc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LookAtDetect"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.592596, 1.04713, 0.0446167)
+shape = SubResource("BoxShape3D_6mu0p")
+
+[node name="StallUI" parent="." instance=ExtResource("4_6mu0p")]
+visible = false
+
+[connection signal="focus_gained" from="LookAtDetect" to="." method="_on_look_at_detect_focus_gained"]
+[connection signal="focus_lost" from="LookAtDetect" to="." method="_on_look_at_detect_focus_lost"]

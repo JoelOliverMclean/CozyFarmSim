@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://d3ronqv6ojg5g"]
+
+[ext_resource type="Script" uid="uid://dcudu0mbaqq5m" path="res://Scripts/day_night_cycle.gd" id="1_sejns"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_sejns"]
+sky_curve = 0.0652914
+sky_energy_multiplier = 0.999999
+ground_energy_multiplier = 0.999999
+
+[sub_resource type="Sky" id="Sky_hptm8"]
+sky_material = SubResource("ProceduralSkyMaterial_sejns")
+
+[sub_resource type="Environment" id="Environment_ktfu2"]
+background_mode = 2
+sky = SubResource("Sky_hptm8")
+ambient_light_sky_contribution = 0.999999
+
+[node name="DayNightCycle" type="Node3D"]
+script = ExtResource("1_sejns")
+
+[node name="SunLight" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.730842, 0.682547, 0, -0.682547, -0.730842, 0, 0, -14.9351)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ktfu2")

@@ -1,0 +1,8 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://c2h1awn0scpdo"]
+
+[ext_resource type="Script" uid="uid://ck536nwwx17bm" path="res://addons/zylann.hterrain/hterrain_texture_set.gd" id="1_e0sr7"]
+
+[resource]
+script = ExtResource("1_e0sr7")
+mode = 0
+textures = [[], []]
