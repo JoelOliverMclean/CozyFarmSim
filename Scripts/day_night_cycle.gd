@@ -15,7 +15,7 @@ var time_of_day: float = 6.0:
 
 @export var sunrise_time: float = 6.0    # 6 AM
 @export var sunset_time: float = 20.0    # 8 PM
-@export var day_length_minutes: float = 2.0
+@export var day_length_minutes: float = 10.0
 
 @onready var sun_light: DirectionalLight3D = get_node("SunLight")
 @onready var env: WorldEnvironment = get_node("WorldEnvironment")
