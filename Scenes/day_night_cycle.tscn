@@ -19,7 +19,7 @@ ambient_light_sky_contribution = 0.999999
 script = ExtResource("1_sejns")
 
 [node name="SunLight" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -0.730842, 0.682547, 0, -0.682547, -0.730842, 0, 0, -14.9351)
+transform = Transform3D(1, 0, 0, 0, -1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0)
 shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]

@@ -8,9 +8,10 @@ extends Node3D
 var time_of_day: float = 6.0:
 	set(value):
 		time_of_day = value
-		var sun_angle = get_sun_angle(time_of_day)
-		sun_light.rotation_degrees = Vector3(sun_angle - 180.0, 0, 0) # offset: 90° = noon straight overhead
-		sun_light.notify_property_list_changed()
+		if Engine.is_editor_hint():
+			if sun_light:
+				update_sun()
+				sun_light.notify_property_list_changed()
 
 @export var sunrise_time: float = 6.0    # 6 AM
 @export var sunset_time: float = 20.0    # 8 PM
@@ -31,6 +32,7 @@ var angle_offset = 45
 
 
 func _ready() -> void:
+	play_in_editor = true
 	day_seconds = day_length_minutes * 60.0
 
 
@@ -52,22 +54,20 @@ func format_time_of_day() -> String:
 
 
 func update_sun():
+	var light_energy
+	
+	if time_of_day < sunrise_time or time_of_day >= sunset_time:
+		light_energy = lerp(env.environment.ambient_light_sky_contribution, 0.1, 0.02)
+	else:
+		light_energy = lerp(env.environment.ambient_light_sky_contribution, 1.0, 0.02)
+		
+	env.environment.ambient_light_sky_contribution = light_energy
+	(env.environment.sky.sky_material as ProceduralSkyMaterial).sky_energy_multiplier = light_energy
+	(env.environment.sky.sky_material as ProceduralSkyMaterial).ground_energy_multiplier = light_energy
+	sun_light.light_energy = light_energy
+	
 	var sun_angle = get_sun_angle(time_of_day)
 	sun_light.rotation_degrees = Vector3(sun_angle - 180.0, 0, 0) # offset: 90° = noon straight overhead
-
-	var contrib
-	
-	# Color and intensity blending
-	var t = time_of_day
-	if t < sunrise_time or t >= sunset_time:
-		contrib = lerp(env.environment.ambient_light_sky_contribution, 0.1, 0.02)
-	else:
-		contrib = lerp(env.environment.ambient_light_sky_contribution, 1.0, 0.02)
-		
-	env.environment.ambient_light_sky_contribution = contrib
-	(env.environment.sky.sky_material as ProceduralSkyMaterial).sky_energy_multiplier = contrib
-	(env.environment.sky.sky_material as ProceduralSkyMaterial).ground_energy_multiplier = contrib
-	sun_light.light_energy = contrib
 
 
 func get_sun_angle(time_of_day: float) -> float:
