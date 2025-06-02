@@ -1,8 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://bpk8uqv8m4mbb"]
+[gd_scene load_steps=14 format=3 uid="uid://bpk8uqv8m4mbb"]
 
 [ext_resource type="PackedScene" uid="uid://b8txaljt3tt8v" path="res://Resources/Models/lowpolywell.glb" id="1_fkaar"]
 [ext_resource type="Script" uid="uid://njxij726xwdp" path="res://Scripts/well.gd" id="1_swqaa"]
 [ext_resource type="Script" uid="uid://5s47jqwuhs5m" path="res://Scripts/interactable.gd" id="2_o0wdx"]
+[ext_resource type="PackedScene" uid="uid://cqhesn4086j11" path="res://Scenes/pulsing_label_3d.tscn" id="3_w0l7h"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_o0wdx"]
 height = 0.998047
@@ -82,14 +83,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0308659, 0.25, 0)
 cast_shadow = 0
 mesh = SubResource("TubeTrailMesh_swqaa")
 
-[node name="InteractLabel" type="Label3D" parent="."]
+[node name="InteractLabel" parent="." instance=ExtResource("3_w0l7h")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.54422, -0.00230663)
 visible = false
-billboard = 1
-no_depth_test = true
-text = "[E] Fill Watering Can"
-font_size = 20
-outline_size = 6
+text = "[E] Fetch Water"
 
 [node name="LookAtDetect" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.585747, 5.96046e-08, -0.132174)

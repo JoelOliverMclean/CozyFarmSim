@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://chucoa8eud0m4"]
+[gd_scene load_steps=13 format=3 uid="uid://chucoa8eud0m4"]
 
 [ext_resource type="Script" uid="uid://b6r1phe0xrkm4" path="res://Scripts/stall.gd" id="1_cnl4a"]
 [ext_resource type="PackedScene" uid="uid://v6rwninb2cs7" path="res://Resources/Models/stall.glb" id="1_wxwty"]
@@ -7,6 +7,7 @@
 [ext_resource type="Resource" uid="uid://nxmiplpj58yn" path="res://Resources/Items/planter.tres" id="3_wshl7"]
 [ext_resource type="PackedScene" uid="uid://kwkop7rbbb2p" path="res://Scenes/UI/stall_ui.tscn" id="4_6mu0p"]
 [ext_resource type="Resource" uid="uid://c7xl08k8ihncg" path="res://Resources/Items/seeds.tres" id="4_trnft"]
+[ext_resource type="PackedScene" uid="uid://cqhesn4086j11" path="res://Scenes/pulsing_label_3d.tscn" id="6_wshl7"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_wxwty"]
 size = Vector3(2.31055, 2.30821, 0.224487)
@@ -47,14 +48,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.95498, 0.113987)
 text = "Market Stall"
 outline_size = 6
 
-[node name="InteractLabel" type="Label3D" parent="."]
+[node name="InteractLabel" parent="." instance=ExtResource("6_wshl7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.28884, -0.178178)
 visible = false
-billboard = 1
-no_depth_test = true
 text = "[E] Shop"
-font_size = 20
-outline_size = 6
 
 [node name="LookAtDetect" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.585747, 5.96046e-08, -0.132174)

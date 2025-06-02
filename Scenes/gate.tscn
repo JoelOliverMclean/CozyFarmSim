@@ -1,7 +1,8 @@
-[gd_scene load_steps=41 format=4 uid="uid://87y3gdxy64c"]
+[gd_scene load_steps=42 format=4 uid="uid://87y3gdxy64c"]
 
 [ext_resource type="Script" uid="uid://bty4gkt0w7mwm" path="res://Scripts/gate.gd" id="1_1lkl7"]
 [ext_resource type="Script" uid="uid://5s47jqwuhs5m" path="res://Scripts/interactable.gd" id="2_hn85u"]
+[ext_resource type="PackedScene" uid="uid://cqhesn4086j11" path="res://Scenes/pulsing_label_3d.tscn" id="2_kfxhe"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_un8hr"]
 resource_name = "Wood"
@@ -467,7 +468,7 @@ shadow_mesh = SubResource("ArrayMesh_2eolc")
 size = Vector3(1.16858, 1.0022, 0.133057)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_hn85u"]
-size = Vector3(2.04907, 1.31445, 0.56842)
+size = Vector3(2.04907, 1.5607, 0.56842)
 
 [sub_resource type="Animation" id="Animation_t224d"]
 resource_name = "Closed"
@@ -638,14 +639,10 @@ skeleton = NodePath("")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.591003, 0.552124, -0.0679932)
 shape = SubResource("BoxShape3D_1lkl7")
 
-[node name="InteractLabel" type="Label3D" parent="GateDoor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.585747, 1.19053, -0.132174)
+[node name="InteractLabel" parent="GateDoor" instance=ExtResource("2_kfxhe")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.585747, 1.39445, -0.132174)
 visible = false
-billboard = 1
-no_depth_test = true
 text = "[E] Open"
-font_size = 20
-outline_size = 6
 
 [node name="LookAtDetect" type="Area3D" parent="GateDoor"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.585747, 5.96046e-08, -0.132174)
@@ -654,7 +651,7 @@ collision_mask = 0
 script = ExtResource("2_hn85u")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="GateDoor/LookAtDetect"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.680885, 0.0446167)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.80401, 0.0446167)
 shape = SubResource("BoxShape3D_hn85u")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="GateDoor"]

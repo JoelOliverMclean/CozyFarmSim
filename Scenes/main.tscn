@@ -263,7 +263,6 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1.9325
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2.0675, 0, 4.00499)
 
 [node name="DayNightCycle" parent="." instance=ExtResource("11_6iyac")]
-time_of_day = 5.3
 
 [node name="Player" parent="." node_paths=PackedStringArray("bed", "day_night_cycle") instance=ExtResource("1_jjgbg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.16557, -9.53674e-08, 0.233341)
