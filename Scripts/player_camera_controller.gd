@@ -26,9 +26,13 @@ func _input(event: InputEvent) -> void:
 
 func look_input(delta: float) -> void:
 	get_parent().rotate_y(-camera_look_input.x * look_sensitivity)
+	if zoom < 1:
+		third_person_cam_rig.position.x = lerp(third_person_cam_rig.position.x, 0.0, 10.0 * delta)
+	else:
+		third_person_cam_rig.position.x = lerp(third_person_cam_rig.position.x, 0.6, 10.0 * delta)
 	camera_distance = lerp(camera_distance, -zoom, 10.0 * delta)
-	if active_rig:
-		active_rig.camera_look(camera_look_input, look_sensitivity, camera_distance)
+	first_person_cam_rig.camera_look(camera_look_input, look_sensitivity, camera_distance, delta)
+	third_person_cam_rig.camera_look(camera_look_input, look_sensitivity, camera_distance, delta)
 	update_camera_view()
 	camera_look_input = Vector2.ZERO
 

@@ -1110,6 +1110,7 @@ autoplay = "Idle"
 playback_default_blend_time = 0.3
 
 [node name="ThirdPersonCamRig" type="Node3D" parent="CameraController"]
+transform = Transform3D(0.99972, 0, -0.0236474, 0, 1, 0, 0.0236474, 0, 0.99972, 0.5, 0, 0)
 script = ExtResource("3_x3wgy")
 camera_collision_mask = 1
 

@@ -2,8 +2,10 @@ class_name ThirdPersonCameraRig
 extends CameraRig
 
 
-func camera_look(camera_look_input: Vector2, look_sensitivity: float, camera_distance: float):
-	super.camera_look(camera_look_input, look_sensitivity, camera_distance)
+func camera_look(camera_look_input: Vector2, look_sensitivity: float, camera_distance: float, delta: float):
+	super.camera_look(camera_look_input, look_sensitivity, camera_distance, delta)
+	
+	## Camera Collision ##
 	var pivot_position = global_transform.origin
 	var desired_camera_position = pivot_position - global_transform.basis.z * camera_distance
 

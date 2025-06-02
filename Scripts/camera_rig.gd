@@ -8,7 +8,7 @@ extends Node3D
 @onready var raycast: RayCast3D = $RayCast3D
 
 
-func camera_look(camera_look_input: Vector2, look_sensitivity: float, camera_distance: float):
+func camera_look(camera_look_input: Vector2, look_sensitivity: float, camera_distance: float, delta: float):
 	rotate_x(-camera_look_input.y * look_sensitivity)
 	rotation.x = clamp(rotation.x, -1.2, 1)
 
