@@ -32,7 +32,6 @@ func go_to_bed(player: Player):
 func wake_player():
 	if $AnimationPlayer.current_animation != "Waking":
 		$AnimationPlayer.play("Waking")
-		print("Waking playing")
 
 
 func can_get_out() -> bool:

@@ -52,7 +52,6 @@ func is_daytime() -> bool:
 func _process(delta):
 	if should_run():
 		var minutes_per_second = 24.0 / ((day_length_minutes * get_fast_forward()) * 60.0)
-		print(minutes_per_second)
 		time_of_day += minutes_per_second * delta
 		if time_of_day >= 24.0:
 			time_of_day -= 24.0
