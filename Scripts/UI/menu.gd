@@ -1,5 +1,5 @@
 class_name Menu
-extends Panel
+extends Control
 
 
 signal menu_closed

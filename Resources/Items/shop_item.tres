@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="ShopItem" load_steps=2 format=3 uid="uid://cg3c1blo5d5tw"]
-
-[ext_resource type="Script" uid="uid://cqrghkqm1vp20" path="res://Resources/Items/shop_item.gd" id="1_0mfc6"]
-
-[resource]
-resource_name = "ShopItem"
-script = ExtResource("1_0mfc6")
-item_name = ""
-cost = 0

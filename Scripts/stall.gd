@@ -4,17 +4,17 @@ extends StaticBody3D
 
 @export var sign_text: String
 
-@export var inventory: Array[ShopItem] = []
+@export var inventory: Array[Item] = []
 
 
 @onready var look_at: Interactable = get_node("LookAtDetect")
 @onready var interact_label: Label3D = get_node("InteractLabel")
-@onready var sign: Label3D = get_node("Sign")
+@onready var shop_sign: Label3D = get_node("Sign")
 @onready var stall_ui: StallUI = get_node("StallUI")
 
 
 func _ready() -> void:
-	sign.text = sign_text
+	shop_sign.text = sign_text
 	stall_ui.init(sign_text)
 	stall_ui.display_items(inventory)
 

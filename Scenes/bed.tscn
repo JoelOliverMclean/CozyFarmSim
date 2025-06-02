@@ -1,0 +1,143 @@
+[gd_scene load_steps=11 format=3 uid="uid://dmnh05e7a68eu"]
+
+[ext_resource type="Script" uid="uid://c3cs0qgfpym83" path="res://Scripts/bed.gd" id="1_8uqln"]
+[ext_resource type="Script" uid="uid://5s47jqwuhs5m" path="res://Scripts/interactable.gd" id="1_yfxyx"]
+[ext_resource type="PackedScene" uid="uid://cqhesn4086j11" path="res://Scenes/pulsing_label_3d.tscn" id="2_ki1gv"]
+[ext_resource type="PackedScene" uid="uid://d2y4tnrbbrkeq" path="res://Resources/Models/bed.glb" id="4_l6is3"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8uqln"]
+size = Vector3(2.24652, 0.739746, 1)
+
+[sub_resource type="Animation" id="Animation_l6is3"]
+resource_name = "Idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.85, 1.9, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera3D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-1.0472, 1.5708, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ki1gv"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.85, 1.9, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera3D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-1.0472, 1.5708, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_8uqln"]
+resource_name = "Waking"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.74),
+"transitions": PackedFloat32Array(-2, 1),
+"update": 0,
+"values": [Vector3(0.85, 1.9, 0), Vector3(-0.366672, 1.21886, 0.00967288)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera3D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.366667, 0.966667),
+"transitions": PackedFloat32Array(-2, 0),
+"update": 0,
+"values": [Vector3(-1.0472, 1.5708, 0), Vector3(0.960091, -1.57982, -0.016941)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_l6is3"]
+_data = {
+&"Idle": SubResource("Animation_l6is3"),
+&"RESET": SubResource("Animation_ki1gv"),
+&"Waking": SubResource("Animation_8uqln")
+}
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_l6is3"]
+size = Vector3(2.06784, 0.595108, 1.15411)
+
+[node name="StaticBody3D" type="StaticBody3D"]
+script = ExtResource("1_8uqln")
+
+[node name="SleepMarker" type="Marker3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 4.37114e-08, 0, -4.37114e-08, -1, 1, -4.37114e-08, 1.91069e-15, 0.875, 0.6, 0)
+
+[node name="InteractLabel" parent="." instance=ExtResource("2_ki1gv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.649524, -0.00230663)
+visible = false
+text = "[E] Sleep"
+
+[node name="LookAtDetect" type="Area3D" parent="."]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("1_yfxyx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LookAtDetect"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1185, 0.369873, 0)
+shape = SubResource("BoxShape3D_8uqln")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-3.61999e-06, -0.866027, 0.499998, 0, 0.499998, 0.866027, -1, 3.13501e-06, -1.80999e-06, 0.85, 1.9, 0)
+current = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_l6is3")
+}
+autoplay = "Idle"
+speed_scale = 0.5
+
+[node name="bed" parent="." instance=ExtResource("4_l6is3")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00209045, 0.282173, 0.00949097)
+shape = SubResource("BoxShape3D_l6is3")
+
+[connection signal="focus_gained" from="LookAtDetect" to="." method="_on_look_at_detect_focus_gained"]
+[connection signal="focus_lost" from="LookAtDetect" to="." method="_on_look_at_detect_focus_lost"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

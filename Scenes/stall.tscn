@@ -1,13 +1,12 @@
-[gd_scene load_steps=13 format=3 uid="uid://chucoa8eud0m4"]
+[gd_scene load_steps=12 format=3 uid="uid://chucoa8eud0m4"]
 
 [ext_resource type="Script" uid="uid://b6r1phe0xrkm4" path="res://Scripts/stall.gd" id="1_cnl4a"]
 [ext_resource type="PackedScene" uid="uid://v6rwninb2cs7" path="res://Resources/Models/stall.glb" id="1_wxwty"]
-[ext_resource type="Script" uid="uid://cqrghkqm1vp20" path="res://Resources/Items/shop_item.gd" id="2_cw388"]
+[ext_resource type="Script" uid="uid://dw87xtm7qglrx" path="res://Scripts/Resources/item.gd" id="2_bl546"]
 [ext_resource type="Script" uid="uid://5s47jqwuhs5m" path="res://Scripts/interactable.gd" id="3_43idc"]
-[ext_resource type="Resource" uid="uid://p2o4beu4fc4" path="res://Resources/Items/ShopItems/seeds.tres" id="3_wshl7"]
+[ext_resource type="Resource" uid="uid://nxmiplpj58yn" path="res://Resources/Items/planter.tres" id="3_wshl7"]
 [ext_resource type="PackedScene" uid="uid://kwkop7rbbb2p" path="res://Scenes/UI/stall_ui.tscn" id="4_6mu0p"]
-[ext_resource type="Resource" uid="uid://dy843b8gucir2" path="res://Resources/Items/ShopItems/watering_can.tres" id="4_trnft"]
-[ext_resource type="Resource" uid="uid://x43ms6retui8" path="res://Resources/Items/ShopItems/planter.tres" id="5_0eafo"]
+[ext_resource type="Resource" uid="uid://c7xl08k8ihncg" path="res://Resources/Items/seeds.tres" id="4_trnft"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_wxwty"]
 size = Vector3(2.31055, 2.30821, 0.224487)
@@ -23,7 +22,7 @@ size = Vector3(2.04907, 1.57593, 0.56842)
 
 [node name="Stall" type="StaticBody3D"]
 script = ExtResource("1_cnl4a")
-inventory = Array[ExtResource("2_cw388")]([ExtResource("3_wshl7"), ExtResource("4_trnft"), ExtResource("5_0eafo")])
+inventory = Array[ExtResource("2_bl546")]([ExtResource("3_wshl7"), ExtResource("4_trnft")])
 
 [node name="Model" parent="." instance=ExtResource("1_wxwty")]
 

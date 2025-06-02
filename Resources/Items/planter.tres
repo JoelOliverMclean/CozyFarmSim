@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Item" load_steps=3 format=3 uid="uid://nxmiplpj58yn"]
+
+[ext_resource type="Texture2D" uid="uid://lf655pkfxde1" path="res://Resources/Images/planter.png" id="1_3w7yj"]
+[ext_resource type="Script" uid="uid://dw87xtm7qglrx" path="res://Scripts/Resources/item.gd" id="1_pcmbj"]
+
+[resource]
+script = ExtResource("1_pcmbj")
+item_name = "Planter"
+item_cost = 20
+item_texture = ExtResource("1_3w7yj")
+metadata/_custom_type_script = "uid://dw87xtm7qglrx"

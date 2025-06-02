@@ -1,7 +1,8 @@
-[gd_scene load_steps=167 format=4 uid="uid://cjpwjoxcekty5"]
+[gd_scene load_steps=173 format=4 uid="uid://cjpwjoxcekty5"]
 
 [ext_resource type="Script" uid="uid://bty4gkt0w7mwm" path="res://Scripts/gate.gd" id="1_n87ef"]
 [ext_resource type="Script" uid="uid://5s47jqwuhs5m" path="res://Scripts/interactable.gd" id="1_okrnj"]
+[ext_resource type="PackedScene" uid="uid://cqhesn4086j11" path="res://Scenes/pulsing_label_3d.tscn" id="2_3jr7h"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x3um4"]
 resource_name = "Wood"
@@ -2548,7 +2549,16 @@ _data = {
 }
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_okrnj"]
-size = Vector3(2.96948, 1.98389, 0.324341)
+size = Vector3(1.26636, 1.98389, 0.324341)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_x4svt"]
+size = Vector3(0.977905, 1.98389, 0.324341)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ttg8n"]
+size = Vector3(0.977905, 1.2301, 0.208099)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0h1dt"]
+size = Vector3(0.977905, 0.519837, 0.208099)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_lmwq5"]
 size = Vector3(4.66443, 0.486527, 0.324341)
@@ -2557,13 +2567,16 @@ size = Vector3(4.66443, 0.486527, 0.324341)
 size = Vector3(0.940796, 1.98389, 0.324341)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_3jr7h"]
-size = Vector3(0.388062, 1.98389, 4.63553)
+size = Vector3(0.388062, 2.42114, 4.63553)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_iqtyj"]
-size = Vector3(4.67108, 1.98389, 0.343575)
+size = Vector3(4.67108, 2.29358, 0.343575)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xi0mm"]
-size = Vector3(0.293427, 1.98389, 4.64249)
+size = Vector3(0.293427, 1.98389, 2.97212)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_karln"]
+size = Vector3(0.293427, 1.98389, 0.966531)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_bu6dc"]
 radius = 0.264018
@@ -2580,6 +2593,9 @@ size = Vector3(4.77081, 0.520996, 4.76558)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_x4svt"]
 radius = 0.1
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_n87ef"]
+points = PackedVector3Array(2.285, 0, 0.15, 2.285, 0, -0.15, -2.325, 0, 0.15, -2.325, 0, -0.15, 0, 1.13, -0.15, 0, 1.13, 0.15)
 
 [node name="House" type="StaticBody3D"]
 
@@ -2955,14 +2971,10 @@ skeleton = NodePath("")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.367094, 1.00015, 0.0567303)
 shape = SubResource("BoxShape3D_7p874")
 
-[node name="InteractLabel" type="Label3D" parent="DoorHinge"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.398773, 1.15055, 0.0995185)
+[node name="InteractLabel" parent="DoorHinge" instance=ExtResource("2_3jr7h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.401804, 1.15358, 0.0995185)
 visible = false
-billboard = 1
-no_depth_test = true
 text = "[E] Open"
-font_size = 16
-outline_size = 6
 
 [node name="LookAtDetect" type="Area3D" parent="DoorHinge"]
 collision_layer = 8
@@ -2980,8 +2992,24 @@ libraries = {
 autoplay = "Closed"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.869019, 1.76792, 2.15883)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0174574, 1.76792, 2.15883)
 shape = SubResource("BoxShape3D_okrnj")
+
+[node name="CollisionShape3D15" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.84202, 1.76792, 2.15883)
+shape = SubResource("BoxShape3D_x4svt")
+
+[node name="CollisionShape3D16" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.00535, 1.39103, 2.15883)
+shape = SubResource("BoxShape3D_ttg8n")
+
+[node name="CollisionShape3D17" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2.15149, 1.39103, -0.985703)
+shape = SubResource("BoxShape3D_ttg8n")
+
+[node name="CollisionShape3D19" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2.15149, 2.98453, -0.985703)
+shape = SubResource("BoxShape3D_0h1dt")
 
 [node name="CollisionShape3D11" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0215451, 3.01654, 2.15883)
@@ -2992,16 +3020,20 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.86383, 1.76792, 2.15883)
 shape = SubResource("BoxShape3D_n87ef")
 
 [node name="CollisionShape3D3" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.15973, 1.76792, 0.00323772)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.15973, 1.98655, 0.00323772)
 shape = SubResource("BoxShape3D_3jr7h")
 
 [node name="CollisionShape3D4" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.018219, 1.76792, -2.14274)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.018219, 1.92277, -2.14274)
 shape = SubResource("BoxShape3D_iqtyj")
 
 [node name="CollisionShape3D5" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.17061, 1.76792, 0.00671864)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.17061, 2.0619, 0.841902)
 shape = SubResource("BoxShape3D_xi0mm")
+
+[node name="CollisionShape3D18" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.17061, 2.0619, -1.8348)
+shape = SubResource("BoxShape3D_karln")
 
 [node name="CollisionShape3D6" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 2.98023e-08, 1, 0, -1, 2.98023e-08, 0, 4.21709, -0.0238476)
@@ -3026,6 +3058,14 @@ shape = SubResource("BoxShape3D_7ug6d")
 [node name="CollisionShape3D12" type="CollisionShape3D" parent="."]
 transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0.975378, 0.687872, 2.40809)
 shape = SubResource("CapsuleShape3D_x4svt")
+
+[node name="CollisionShape3D13" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00081349, 3.08133, -2.14274)
+shape = SubResource("ConvexPolygonShape3D_n87ef")
+
+[node name="CollisionShape3D14" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00081349, 3.08133, 2.17446)
+shape = SubResource("ConvexPolygonShape3D_n87ef")
 
 [connection signal="focus_gained" from="DoorHinge/LookAtDetect" to="DoorHinge" method="_on_look_at_detect_focus_gained"]
 [connection signal="focus_lost" from="DoorHinge/LookAtDetect" to="DoorHinge" method="_on_look_at_detect_focus_lost"]

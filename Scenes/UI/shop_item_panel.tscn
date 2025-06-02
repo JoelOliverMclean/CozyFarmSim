@@ -1,6 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://o6fbhn5aa601"]
+[gd_scene load_steps=8 format=3 uid="uid://o6fbhn5aa601"]
 
 [ext_resource type="Script" uid="uid://cx7x0nsjbmi8v" path="res://Scripts/shop_item_panel.gd" id="1_5dq05"]
+[ext_resource type="Texture2D" uid="uid://bb8owvcpqvf5n" path="res://Resources/Images/seeds.png" id="2_5dq05"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5dq05"]
+bg_color = Color(0, 0.392157, 0.396078, 0.294118)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n2ow4"]
 draw_center = false
@@ -14,18 +18,18 @@ border_color = Color(0.0396015, 0.472031, 1.92523e-07, 1)
 Panel/styles/panel = SubResource("StyleBoxFlat_n2ow4")
 
 [sub_resource type="LabelSettings" id="LabelSettings_5dq05"]
-font_size = 12
+font_size = 24
 
 [sub_resource type="LabelSettings" id="LabelSettings_pt4s5"]
-font_size = 10
 
 [node name="ShopItemPanel" type="Panel"]
-custom_minimum_size = Vector2(110, 110)
+custom_minimum_size = Vector2(200, 200)
 anchors_preset = -1
 anchor_right = 0.095
 anchor_bottom = 0.17
 offset_right = -109.44
 offset_bottom = -110.16
+theme_override_styles/panel = SubResource("StyleBoxFlat_5dq05")
 script = ExtResource("1_5dq05")
 
 [node name="Selected" type="Panel" parent="."]
@@ -38,31 +42,64 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_5dq05")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 3.0
-offset_top = 3.0
-offset_right = -3.0
-offset_bottom = -3.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
 theme_override_constants/separation = 4
 
-[node name="Name" type="Label" parent="VBoxContainer"]
+[node name="Name" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+text = "Seeds"
 label_settings = SubResource("LabelSettings_5dq05")
 horizontal_alignment = 1
 
-[node name="Image" type="TextureRect" parent="VBoxContainer"]
+[node name="Image" type="TextureRect" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+texture = ExtResource("2_5dq05")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="Cost" type="Label" parent="VBoxContainer"]
+[node name="Cost" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+text = "12 coins"
 label_settings = SubResource("LabelSettings_pt4s5")
 horizontal_alignment = 1
+
+[node name="QuantityBar" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="LessButton" type="Button" parent="MarginContainer/VBoxContainer/QuantityBar"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+text = "-
+"
+
+[node name="Quantity" type="LineEdit" parent="MarginContainer/VBoxContainer/QuantityBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+alignment = 1
+context_menu_enabled = false
+emoji_menu_enabled = false
+
+[node name="MoreButton" type="Button" parent="MarginContainer/VBoxContainer/QuantityBar"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+text = "+"
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/QuantityBar/LessButton" to="." method="_on_less_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/QuantityBar/MoreButton" to="." method="_on_more_button_pressed"]
