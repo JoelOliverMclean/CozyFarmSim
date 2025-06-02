@@ -2990,6 +2990,7 @@ libraries = {
 &"": SubResource("AnimationLibrary_iqtyj")
 }
 autoplay = "Closed"
+playback_default_blend_time = 0.15
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0174574, 1.76792, 2.15883)
@@ -3069,4 +3070,3 @@ shape = SubResource("ConvexPolygonShape3D_n87ef")
 
 [connection signal="focus_gained" from="DoorHinge/LookAtDetect" to="DoorHinge" method="_on_look_at_detect_focus_gained"]
 [connection signal="focus_lost" from="DoorHinge/LookAtDetect" to="DoorHinge" method="_on_look_at_detect_focus_lost"]
-[connection signal="animation_finished" from="DoorHinge/AnimationPlayer" to="DoorHinge" method="_on_animation_player_animation_finished"]

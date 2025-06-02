@@ -27,16 +27,5 @@ func open_close() -> void:
 		animation_player.play("Closing")
 	else:
 		animation_player.play("Opening")
-
-
-func _on_animation_player_animation_finished(anim_name: StringName) -> void:
-	if anim_name == "Opening":
-		open = true
-		update_label_text("[E] Close")
-	elif anim_name == "Closing":
-		open = false
-		update_label_text("[E] Open")
-
-
-func update_label_text(text: String) -> void:
-	interact_label.text = text
+	open = !open
+	interact_label.text = "[E] Open" if open else "[E] Close"
