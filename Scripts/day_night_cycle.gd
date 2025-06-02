@@ -12,8 +12,8 @@ var player_asleep: bool
 var time_of_day: float = 6.0:
 	set(value):
 		time_of_day = value
-		if sun_light:
-			update_sun()
+		if sun_light and Engine.is_editor_hint():
+			update_sun(1.0)
 			update_light_energy(get_desired_light_energy_for_time())
 			sun_light.notify_property_list_changed()
 
@@ -57,7 +57,7 @@ func _process(delta):
 		if time_of_day >= 24.0:
 			time_of_day -= 24.0
 
-		update_sun()
+		update_sun(delta)
 
 
 func get_fast_forward() -> float:
@@ -71,8 +71,8 @@ func format_time_of_day() -> String:
 	return "%02d:%02d" % [hours, minutes]
 
 
-func update_sun():
-	var light_energy = lerp(env.environment.ambient_light_sky_contribution, get_desired_light_energy_for_time(), 0.02)
+func update_sun(delta: float):
+	var light_energy = lerp(env.environment.ambient_light_sky_contribution, get_desired_light_energy_for_time(), 0.05 * delta)
 	update_light_energy(light_energy)
 	
 	var sun_angle = get_sun_angle()
