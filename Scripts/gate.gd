@@ -28,4 +28,4 @@ func open_close() -> void:
 	else:
 		animation_player.play("Opening")
 	open = !open
-	interact_label.text = "[E] Open" if open else "[E] Close"
+	interact_label.text = "[E] Close" if open else "[E] Open"

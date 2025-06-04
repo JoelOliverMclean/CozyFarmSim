@@ -1,0 +1,98 @@
+[gd_scene load_steps=13 format=3 uid="uid://djfe0d8mr6pq"]
+
+[ext_resource type="Script" uid="uid://kxbpbokgit8b" path="res://Scripts/stall_with_items.gd" id="1_iv580"]
+[ext_resource type="FontFile" uid="uid://cm4qende06v6c" path="res://Resources/Fonts/PaintPeelInitials-q38q.ttf" id="3_aft4d"]
+[ext_resource type="Script" uid="uid://bmedqjgqbnir7" path="res://Scripts/stall_item.gd" id="3_ix724"]
+[ext_resource type="PackedScene" uid="uid://cw2pkmhs42ems" path="res://Scenes/Models/planter_model.tscn" id="5_aft4d"]
+[ext_resource type="PackedScene" uid="uid://v6rwninb2cs7" path="res://Resources/Models/stall.glb" id="5_dgki2"]
+[ext_resource type="PackedScene" uid="uid://cqhesn4086j11" path="res://Scenes/pulsing_label_3d.tscn" id="6_1ii3d"]
+[ext_resource type="Script" uid="uid://5s47jqwuhs5m" path="res://Scripts/interactable.gd" id="7_4au0b"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wxwty"]
+size = Vector3(2.31055, 2.30821, 0.224487)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cnl4a"]
+size = Vector3(0.16272, 1.07007, 1.02588)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_43idc"]
+size = Vector3(2.3125, 0.12207, 0.664551)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_raui8"]
+size = Vector3(1.14093, 1.08536, 1.22778)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ix724"]
+radius = 6.20536
+
+[node name="StallWithItems" type="StaticBody3D"]
+script = ExtResource("1_iv580")
+
+[node name="Model" parent="." instance=ExtResource("5_dgki2")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.15359, -0.00704145)
+shape = SubResource("BoxShape3D_wxwty")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.01385, 0.53186, -0.632844)
+shape = SubResource("BoxShape3D_cnl4a")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.02513, 0.53186, -0.632844)
+shape = SubResource("BoxShape3D_cnl4a")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06851, -0.430067)
+shape = SubResource("BoxShape3D_43idc")
+
+[node name="Sign" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.19591, 0.106281)
+shaded = true
+text = "Market Stall"
+font = ExtResource("3_aft4d")
+font_size = 28
+outline_size = 0
+
+[node name="Sign2" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.94568, 0.106281)
+shaded = true
+text = "Market Stall"
+font = ExtResource("3_aft4d")
+font_size = 28
+outline_size = 0
+
+[node name="StallItem" type="Node3D" parent="."]
+transform = Transform3D(0.241566, 0, 0.0643886, 0, 0.25, 0, -0.0643886, 0, 0.241566, -0.831378, 1.1362, -0.481715)
+script = ExtResource("3_ix724")
+
+[node name="Model" parent="StallItem" instance=ExtResource("5_aft4d")]
+
+[node name="InteractLabel" parent="StallItem" instance=ExtResource("6_1ii3d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000446916, 0.504966, 0.000873208)
+visible = false
+text = "Item for sale"
+font_size = 60
+vertical_alignment = 0
+
+[node name="LookAtDetect" type="Area3D" parent="StallItem"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0236981, 4.76837e-07, 0.134116)
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("7_4au0b")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StallItem/LookAtDetect"]
+transform = Transform3D(0.999999, -0.00128006, 0.000601977, 0.00128019, 0.999999, -0.000217053, -0.000601664, 0.000217816, 1, -0.00509739, 0.540545, 0.0643504)
+shape = SubResource("BoxShape3D_raui8")
+
+[node name="RenderItemsSphere" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RenderItemsSphere"]
+transform = Transform3D(0.999999, 0.00108544, -0.00118175, -0.00108536, 0.999999, 6.04114e-05, 0.00118182, -5.91066e-05, 0.999999, 0, 0, 0)
+shape = SubResource("SphereShape3D_ix724")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.65611, 0.961103)
+
+[connection signal="focus_gained" from="StallItem/LookAtDetect" to="StallItem" method="_on_look_at_detect_focus_gained"]
+[connection signal="focus_lost" from="StallItem/LookAtDetect" to="StallItem" method="_on_look_at_detect_focus_lost"]
+[connection signal="body_entered" from="RenderItemsSphere" to="." method="_on_render_items_sphere_body_entered"]
+[connection signal="body_exited" from="RenderItemsSphere" to="." method="_on_render_items_sphere_body_exited"]

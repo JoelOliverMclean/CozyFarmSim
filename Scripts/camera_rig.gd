@@ -10,7 +10,7 @@ extends Node3D
 
 func camera_look(camera_look_input: Vector2, look_sensitivity: float, camera_distance: float, delta: float):
 	rotate_x(-camera_look_input.y * look_sensitivity)
-	rotation.x = clamp(rotation.x, -1.2, 1)
+	rotation.x = clamp(rotation.x, -.9, 1)
 
 
 func detect_raycast() -> Node3D:

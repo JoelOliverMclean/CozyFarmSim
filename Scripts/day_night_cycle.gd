@@ -9,7 +9,7 @@ var y_offset_angle: int = 15
 var player_asleep: bool
 
 @export_range(0.0, 24.0, 0.01)
-var time_of_day: float = 6.0:
+var time_of_day: float = 5.5:
 	set(value):
 		time_of_day = value
 		if sun_light and Engine.is_editor_hint():
@@ -60,7 +60,7 @@ func _process(delta):
 
 
 func get_fast_forward() -> float:
-	return 0.2 if player_asleep else 1.0
+	return 0.1 if player_asleep else 1.0
 
 
 func format_time_of_day() -> String:
@@ -79,7 +79,7 @@ func update_sun(delta: float):
 
 
 func get_desired_light_energy_for_time() -> float:
-	return 1.0 if is_daytime() else 0.1
+	return 1.0 if is_daytime() else 0.15
 
 
 func update_light_energy(light_energy: float):

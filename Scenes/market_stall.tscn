@@ -1,0 +1,51 @@
+[gd_scene load_steps=7 format=3 uid="uid://bima862jx10b6"]
+
+[ext_resource type="Script" uid="uid://f23ws2x16xwu" path="res://Scenes/market_stall.gd" id="1_atex4"]
+[ext_resource type="PackedScene" uid="uid://v6rwninb2cs7" path="res://Resources/Models/stall.glb" id="2_r0i05"]
+[ext_resource type="FontFile" uid="uid://cm4qende06v6c" path="res://Resources/Fonts/PaintPeelInitials-q38q.ttf" id="3_5gk27"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wxwty"]
+size = Vector3(2.31055, 2.30821, 0.224487)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cnl4a"]
+size = Vector3(0.16272, 1.07007, 1.02588)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_43idc"]
+size = Vector3(2.3125, 0.12207, 0.664551)
+
+[node name="MarketStall" type="StaticBody3D"]
+script = ExtResource("1_atex4")
+
+[node name="Model" parent="." instance=ExtResource("2_r0i05")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.15359, -0.00704145)
+shape = SubResource("BoxShape3D_wxwty")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.01385, 0.53186, -0.632844)
+shape = SubResource("BoxShape3D_cnl4a")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.02513, 0.53186, -0.632844)
+shape = SubResource("BoxShape3D_cnl4a")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06851, -0.430067)
+shape = SubResource("BoxShape3D_43idc")
+
+[node name="Sign" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.19591, 0.106281)
+shaded = true
+text = "Market Stall"
+font = ExtResource("3_5gk27")
+font_size = 28
+outline_size = 0
+
+[node name="Sign2" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.94568, 0.106281)
+shaded = true
+text = "Market Stall"
+font = ExtResource("3_5gk27")
+font_size = 28
+outline_size = 0

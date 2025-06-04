@@ -12,9 +12,13 @@ var zoom = 0.0
 var camera_look_input: Vector2
 var look_sensitivity: float = 0.005
 
+var rotate_y_target: float
+var was_moving: bool
+
 
 func _ready() -> void:
 	active_rig = first_person_cam_rig
+	rotate_y_target = global_rotation.y
 
 
 func _input(event: InputEvent) -> void:
@@ -25,7 +29,21 @@ func _input(event: InputEvent) -> void:
 
 
 func look_input(delta: float) -> void:
-	get_parent().rotate_y(-camera_look_input.x * look_sensitivity)
+	rotate_y_target += -camera_look_input.x * look_sensitivity
+	if active_rig is FirstPersonCameraRig:
+		get_parent().global_rotation.y = rotate_y_target
+	elif player.move_dir.length() != 0:
+		if not was_moving:
+			rotation.y = 0
+		
+		get_parent().global_rotation.y = rotate_y_target
+		
+		was_moving = true
+	else:
+		global_rotation.y = rotate_y_target
+		
+		was_moving = false
+	
 	if zoom < 1:
 		third_person_cam_rig.position.x = lerp(third_person_cam_rig.position.x, 0.0, 10.0 * delta)
 	else:

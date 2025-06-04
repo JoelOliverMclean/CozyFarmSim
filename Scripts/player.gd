@@ -24,6 +24,9 @@ var previous_rotation: Vector3
 var previous_parent: Node3D
 var jumping: bool
 
+var current_stall: StallWithItems
+var was_moving: bool
+
 
 @onready var inventory_ui := $InventoryUI
 @onready var model_anim := $Model/AnimationPlayer
@@ -31,6 +34,10 @@ var jumping: bool
 
 @onready var animation_player: AnimationPlayer = $CameraController/FirstPersonCamRig/AnimationPlayer
 @onready var camera_controller: PlayerCameraController = $CameraController
+@onready var hud: HUD = $HUD
+@onready var hold_marker: Marker3D = $Model/HoldMarker
+
+var held_object: Node3D = null
 
 
 func _ready() -> void:
@@ -38,6 +45,12 @@ func _ready() -> void:
 	inventory_ui.redraw_inventory(inventory)
 	inventory.inventory_updated.connect(_on_inventory_updated)
 	go_to_bed.call_deferred()
+	hud.update_coins(coins)
+	coins_adjusted.connect(_on_coins_adjusted)
+
+
+func _on_coins_adjusted(new_coins) -> void:
+	hud.update_coins(new_coins)
 
 
 func go_to_bed() -> void:
@@ -78,23 +91,83 @@ func awoken():
 
 func _input(event: InputEvent) -> void:
 	if not current_menu:
-		if event.is_action_pressed("interact"):
+		if event.is_action_released("interact"):
 			if asleep:
 				get_out_of_bed()
 			elif colliding_node:
-				interact()
-		if event.is_action_pressed("inventory"):
-			inventory_ui.open_close()
+				interact_with_collider()
+			elif held_object:
+				drop_held_object()
+	if event.is_action_pressed("inventory") and (current_menu is InventoryUI or not current_menu):
+		inventory_ui.open_close()
 
 
-func interact() -> void:
+func interact_with_collider() -> void:
 	if colliding_node.get_parent() is Door:
 		colliding_node.get_parent().open_close()
-	if colliding_node.get_parent() is Stall:
+	elif colliding_node.get_parent() is Stall:
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		colliding_node.get_parent().open_shop()
-	if bed && colliding_node.get_parent() == bed:
+	elif bed && colliding_node.get_parent() == bed:
 		go_to_bed()
+	elif colliding_node.get_parent() is StallItem:
+		buy_item(colliding_node.get_parent())
+
+
+func drop_held_object():
+	if not held_object:
+		return
+	if has_node("HeldItemCollision"):
+		get_node("HeldItemCollision").queue_free()
+	
+	var root = get_tree().current_scene
+	var global_transform_to_keep = held_object.global_transform
+	hold_marker.remove_child(held_object)
+	root.add_child(held_object)
+	held_object.global_transform = global_transform_to_keep
+	
+	held_object.collision_layer = 1
+	held_object.collision_mask = 1
+	
+	var drop_distance = 0.5
+	var forward_dir = -model.global_transform.basis.z.normalized()
+	var carried_pos = held_object.global_transform.origin
+	var drop_pos = carried_pos + Vector3(forward_dir.x, 0, forward_dir.z).normalized() * drop_distance
+	drop_pos.y = global_transform.origin.y
+	held_object.global_transform.origin = drop_pos
+	
+	#if held_object is RigidBody3D:
+		#held_object.linear_velocity = forward_dir * 2
+	
+	held_object = null
+
+
+func buy_item(stall_item: StallItem) -> void:
+	if coins >= stall_item.item.item_cost and held_object == null:
+		coins -= stall_item.item.item_cost
+		pickup_new_item(stall_item)
+
+
+func pickup_new_item(item: StallItem) -> void:
+	var new_planter: RigidBody3D = item.item_scene.instantiate()
+	new_planter.collision_layer = 0
+	new_planter.collision_mask = 0
+	new_planter.freeze = true
+	
+	var planter_hold_point := new_planter.get_node("HoldPoint") as Marker3D
+	var root_to_carry = planter_hold_point.global_transform.affine_inverse() * new_planter.global_transform
+	
+	hold_marker.add_child(new_planter)
+	
+	new_planter.global_transform = hold_marker.global_transform * planter_hold_point.transform.affine_inverse()
+	
+	var extra_shape = CollisionShape3D.new()
+	extra_shape.shape = new_planter.get_node("CollisionShape3D").shape.duplicate()
+	extra_shape.name = "HeldItemCollision"
+	add_child(extra_shape)
+	extra_shape.global_transform = new_planter.get_node("CollisionShape3D").global_transform
+	
+	held_object = new_planter
 
 
 func _process(delta: float) -> void:
@@ -116,6 +189,10 @@ func _process(delta: float) -> void:
 func menu_opened(menu: Menu) -> void:
 	current_menu = menu
 	current_menu.menu_closed.connect(on_menu_closed)
+	if current_menu:
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	else:
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 
 func on_menu_closed() -> void:
@@ -125,6 +202,8 @@ func on_menu_closed() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if held_object:
+		update_hold_marker_position()
 	process_animations(delta)
 	if not Game.paused:
 		super._physics_process(delta)
@@ -132,6 +211,17 @@ func _physics_process(delta: float) -> void:
 			detect_raycast()
 			if not asleep:
 				camera_controller.look_input(delta)
+
+
+func update_hold_marker_position() -> void:
+	var skeleton = model.get_node("Armature/Skeleton3D") as Skeleton3D
+	var left_hand_bone_idx = skeleton.find_bone("Hand.L")
+	var right_hand_bone_idx = skeleton.find_bone("Hand.R")
+	var left_hand_pos = skeleton.get_bone_global_pose(left_hand_bone_idx).origin
+	var right_hand_pos = skeleton.get_bone_global_pose(right_hand_bone_idx).origin
+	var midpoint = (left_hand_pos + right_hand_pos) * 0.5
+	hold_marker.transform.origin = midpoint
+
 
 
 func detect_raycast() -> void:
@@ -156,14 +246,16 @@ func process_animations(delta: float) -> void:
 	if jumping:
 		if model_anim.current_animation != "Jump":
 			model_anim.play("Jump")
-	elif is_on_floor() and (get_move_input().length() != 0 || (camera_controller.camera_look_input.x != 0 and camera_controller.active_rig is ThirdPersonCameraRig)):
-		if model_anim.current_animation != "Walk":
-			model_anim.play("Walk")
+	elif is_on_floor() and get_move_input().length() != 0:
+		var anim = "Walk_Holding" if held_object else "Walk"
+		if model_anim.current_animation != anim:
+			model_anim.play(anim)
 		if animation_player.current_animation != "Walking":
 			animation_player.play("Walking")
 	else:
-		if model_anim.current_animation != "Idle":
-			model_anim.play("Idle")
+		var anim = "Idle_Holding" if held_object else "Idle"
+		if model_anim.current_animation != anim:
+			model_anim.play(anim)
 		if animation_player.current_animation != "Idle":
 			animation_player.play("Idle")
 	
@@ -171,12 +263,17 @@ func process_animations(delta: float) -> void:
 
 
 func rotate_model(delta: float):
-	if move_dir.length() > 0:
-		var target_transform = Transform3D().looking_at(move_dir, Vector3.UP)
-		var current_basis = model.global_transform.basis
+	var is_moving = move_dir.length() > 0
+	
+	if is_moving:
+		if camera_controller.active_rig is ThirdPersonCameraRig:
+			var target_transform = Transform3D().looking_at(move_dir, Vector3.UP)
+			var current_basis = model.global_transform.basis
 
-		# Smoothly interpolate basis (rotation) towards target
-		model.global_transform.basis = current_basis.slerp(target_transform.basis, 10.0 * delta)
+			# Smoothly interpolate basis (rotation) towards target
+			model.global_transform.basis = current_basis.slerp(target_transform.basis, 10.0 * delta)
+		else:
+			model.rotation.y = lerp(model.rotation.y, 0.0, 10.0 * delta)
 
 
 func get_move_input() -> Vector2:
@@ -185,13 +282,8 @@ func get_move_input() -> Vector2:
 	return super.get_move_input()
 
 
-#func actual_jump() -> void:
-	#if is_on_floor() and jumping:
-		#velocity.y = jump_force
-
-
 func jump_input() -> void:
-	if Input.is_action_pressed("jump") and is_on_floor():
+	if Input.is_action_pressed("jump") and is_on_floor() and not held_object:
 		jumping = true
 		velocity.y = jump_force
 
@@ -199,3 +291,9 @@ func jump_input() -> void:
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "Jump":
 		jumping = false
+
+
+func set_shop_ui(stall: StallWithItems) -> void:
+	current_stall = stall
+	if current_stall:
+		coins_adjusted.connect(stall.on_player_coins_adjusted)

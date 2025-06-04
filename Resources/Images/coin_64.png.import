@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://1ukct5bo44vb"
-path="res://.godot/imported/planter.png-0aabf140dcce3d3e72e6410c44ce7959.ctex"
+uid="uid://dv8yecwghadvy"
+path="res://.godot/imported/coin_64.png-6c87799fca33f950e05c99e8191da328.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Resources/Images/planter.png"
-dest_files=["res://.godot/imported/planter.png-0aabf140dcce3d3e72e6410c44ce7959.ctex"]
+source_file="res://Resources/Images/coin_64.png"
+dest_files=["res://.godot/imported/coin_64.png-6c87799fca33f950e05c99e8191da328.ctex"]
 
 [params]
 
