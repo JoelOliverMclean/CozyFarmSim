@@ -145,7 +145,12 @@ func drop_held_object():
 func buy_item(stall_item: StallItem) -> void:
 	if coins >= stall_item.item.item_cost and held_object == null:
 		coins -= stall_item.item.item_cost
-		pickup_new_item(stall_item)
+		var item_size: Enums.ItemSize = stall_item.item.item_size
+		if item_size == Enums.ItemSize.SMALL:
+			inventory.add_item(stall_item.item, 1)
+			inventory_ui.redraw_inventory(inventory)
+		elif item_size == Enums.ItemSize.LARGE:
+			pickup_new_item(stall_item)
 
 
 func pickup_new_item(item: StallItem) -> void:

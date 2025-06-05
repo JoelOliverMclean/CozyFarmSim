@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=4 uid="uid://bs61aounvdlh3"]
+[gd_scene load_steps=30 format=4 uid="uid://bs61aounvdlh3"]
 
 [ext_resource type="Script" uid="uid://b3klfx2tp5eef" path="res://Scripts/market_area.gd" id="1_aapak"]
 [ext_resource type="PackedScene" uid="uid://87y3gdxy64c" path="res://Scenes/gate.tscn" id="2_px1pv"]
@@ -13,6 +13,8 @@
 [ext_resource type="PackedScene" uid="uid://cqhesn4086j11" path="res://Scenes/pulsing_label_3d.tscn" id="12_oc0o2"]
 [ext_resource type="PackedScene" uid="uid://bima862jx10b6" path="res://Scenes/market_stall.tscn" id="13_xlpjp"]
 [ext_resource type="Script" uid="uid://5s47jqwuhs5m" path="res://Scripts/interactable.gd" id="13_xuu7v"]
+[ext_resource type="PackedScene" uid="uid://ccokds8d63f0x" path="res://Scenes/seed_packet.tscn" id="14_nn8px"]
+[ext_resource type="Resource" uid="uid://c7xl08k8ihncg" path="res://Resources/Items/seeds.tres" id="15_oc0o2"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ysiad"]
 resource_name = "Material"
@@ -988,8 +990,8 @@ _data = {
 radius = 0.3
 height = 1.8
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_1hxyq"]
-size = Vector3(0.728352, 0.836503, 0.744934)
+[sub_resource type="BoxShape3D" id="BoxShape3D_oc0o2"]
+size = Vector3(0.723633, 0.865082, 0.733643)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_nn8px"]
 size = Vector3(0.713867, 0.0595703, 2.2804)
@@ -997,10 +999,13 @@ size = Vector3(0.713867, 0.0595703, 2.2804)
 [sub_resource type="BoxShape3D" id="BoxShape3D_xlpjp"]
 size = Vector3(2.38989, 2.31165, 7.06375)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_1hxyq"]
+size = Vector3(0.202393, 0.278687, 0.0859375)
+
 [node name="MarketArea" type="Node3D" node_paths=PackedStringArray("interactables")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
 script = ExtResource("1_aapak")
-interactables = [NodePath("StallShelves/StallItem/InteractLabel")]
+interactables = [NodePath("StallShelves/StallItem/InteractLabel"), NodePath("MarketStall/Seeds/InteractLabel")]
 
 [node name="Shopkeep" type="CharacterBody3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1, 0, -1)
@@ -1183,7 +1188,7 @@ shape = SubResource("CapsuleShape3D_fdnlq")
 [node name="Scenery" type="Node3D" parent="."]
 
 [node name="Gate" parent="Scenery" instance=ExtResource("2_px1pv")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 1.9325, 0, 0.506488)
+transform = Transform3D(0.0140668, 0, -0.999901, 0, 1, 0, 0.999901, 0, 0.0140668, 1.9325, 0, 0.506488)
 
 [node name="Shrubs" type="Node3D" parent="Scenery"]
 
@@ -1251,7 +1256,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.26993, 0, 1.31309)
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
 
 [node name="StallItem" type="Node3D" parent="StallShelves"]
-transform = Transform3D(0.966264, 0, 0.257554, 0, 1, 0, -0.257554, 0, 0.966264, -0.405333, 1.30703, 0.685952)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.405333, 1.30703, 0.685952)
 script = ExtResource("10_xlpjp")
 
 [node name="Model" parent="StallShelves/StallItem" instance=ExtResource("11_nn8px")]
@@ -1260,18 +1265,17 @@ script = ExtResource("10_xlpjp")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000446916, 0.504966, 0.000873208)
 visible = false
 text = "Item for sale"
-font_size = 60
+font_size = 40
 vertical_alignment = 0
 
 [node name="LookAtDetect" type="Area3D" parent="StallShelves/StallItem"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0236981, 4.76837e-07, 0.134116)
 collision_layer = 8
 collision_mask = 0
 script = ExtResource("13_xuu7v")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StallShelves/StallItem/LookAtDetect"]
-transform = Transform3D(0.999999, -0.00128006, 0.000601977, 0.00128019, 0.999999, -0.000217053, -0.00060159, 0.000217816, 0.999997, -0.0250814, 0.416137, -0.14596)
-shape = SubResource("BoxShape3D_1hxyq")
+transform = Transform3D(0.999999, -0.00128006, 0.000601977, 0.00128019, 0.999999, -0.000217053, -0.00060159, 0.000217816, 0.999997, 0.0101562, 0.417205, -0.00889575)
+shape = SubResource("BoxShape3D_oc0o2")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StallShelves"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.397202, 0.577447, -0.000427246)
@@ -1290,7 +1294,43 @@ shape = SubResource("BoxShape3D_xlpjp")
 [node name="MarketStall" parent="." instance=ExtResource("13_xlpjp")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2, 0, -1)
 
+[node name="Seeds" type="Node3D" parent="MarketStall"]
+transform = Transform3D(0.974777, 0, 0.223182, 0, 1, 0, -0.223182, 0, 0.974777, -0.709414, 1.23782, -0.326218)
+script = ExtResource("10_xlpjp")
+item_scene = ExtResource("14_nn8px")
+item = ExtResource("15_oc0o2")
+
+[node name="Model" parent="MarketStall/Seeds" instance=ExtResource("14_nn8px")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="Label3D" type="Label3D" parent="MarketStall/Seeds/Model"]
+transform = Transform3D(1, 0, 0, 0, 0.998714, 0.0506975, 0, -0.0506975, 0.998714, 5.52973e-10, 0.0529069, 0.00759424)
+pixel_size = 0.0005
+shaded = true
+double_sided = false
+text = "Seeds"
+font_size = 64
+
+[node name="InteractLabel" parent="MarketStall/Seeds" instance=ExtResource("12_oc0o2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000446916, 0.011053, 0.0281354)
+visible = false
+pixel_size = 0.0005
+text = ""
+font_size = 72
+vertical_alignment = 0
+
+[node name="LookAtDetect" type="Area3D" parent="MarketStall/Seeds"]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("13_xuu7v")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MarketStall/Seeds/LookAtDetect"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.999997, 0.00354004, 0.00311279, 0)
+shape = SubResource("BoxShape3D_1hxyq")
+
 [connection signal="focus_gained" from="StallShelves/StallItem/LookAtDetect" to="StallShelves/StallItem" method="_on_look_at_detect_focus_gained"]
 [connection signal="focus_lost" from="StallShelves/StallItem/LookAtDetect" to="StallShelves/StallItem" method="_on_look_at_detect_focus_lost"]
 [connection signal="body_entered" from="ActivateArea" to="." method="_on_activate_area_body_entered"]
 [connection signal="body_exited" from="ActivateArea" to="." method="_on_activate_area_body_exited"]
+[connection signal="focus_gained" from="MarketStall/Seeds/LookAtDetect" to="MarketStall/Seeds" method="_on_look_at_detect_focus_gained"]
+[connection signal="focus_lost" from="MarketStall/Seeds/LookAtDetect" to="MarketStall/Seeds" method="_on_look_at_detect_focus_lost"]
